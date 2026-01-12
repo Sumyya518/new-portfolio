@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumyya Sadre Alam | Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent: #ffffff;
+            --border: #333333;
+            --code-bg: #0d0d0d;
+        }
+
+        body {
+            font-family: 'Courier New', 'Monaco', monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: var(--accent);
+            animation: blink 1s infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, var(--bg-secondary) 2px, var(--bg-secondary) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, var(--bg-secondary) 2px, var(--bg-secondary) 4px);
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+        }
+
+        .code-comment {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-line {
+            margin: 0.5rem 0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .line-number {
+            color: var(--text-muted);
+            user-select: none;
+            min-width: 30px;
+        }
+
+        .code-content {
+            flex: 1;
+        }
+
+        .keyword {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .string {
+            color: var(--text-secondary);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin: 1rem 0;
+            font-weight: bold;
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            margin: 1rem 0;
+            font-weight: 300;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta {
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border: 2px solid var(--accent);
+            font-weight: bold;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+
+        .cta:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .cta-secondary:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title::before {
+            content: '>';
+            color: var(--text-muted);
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-left: 2rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .about-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .skill-category {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .skill-category:hover {
+            border-color: var(--accent);
+        }
+
+        .skill-category h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-category h3::before {
+            content: '//';
+            color: var(--text-muted);
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .skill-item:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateX(10px);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-number {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .project-link:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .contact-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .contact-link:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-bar {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid var(--accent);
+            white-space: nowrap;
+            animation: typing 3s steps(40) 1s 1 normal both, blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--accent); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">{'<SS />'}</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="code-comment">// Developer Portfolio</div>
+            <div class="code-block">
+                <div class="code-line">
+                    <span class="line-number">01</span>
+                    <div class="code-content">
+                        <span class="keyword">const</span> developer = {
+                    </div>
+                </div>
+                <div class="code-line">
+                    <span class="line-number">02</span>
+                    <div class="code-content" style="margin-left: 2rem;">
+                        name: <span class="string">"Sumyya Sadre Alam"</span>,
+                    </div>
+                </div>
+                <div class="code-line">
+                    <span class="line-number">03</span>
+                    <div class="code-content" style="margin-left: 2rem;">
+                        education: <span class="string">"B.Tech ECE"</span>,
+                    </div>
+                </div>
+                <div class="code-line">
+                    <span class="line-number">04</span>
+                    <div class="code-content" style="margin-left: 2rem;">
+                        role: <span class="string">"Web Developer"</span>,
+                    </div>
+                </div>
+                <div class="code-line">
+                    <span class="line-number">05</span>
+                    <div class="code-content" style="margin-left: 2rem;">
+                        focus: <span class="string">"Clean, Responsive UI"</span>
+                    </div>
+                </div>
+                <div class="code-line">
+                    <span class="line-number">06</span>
+                    <div class="code-content">};</div>
+                </div>
+            </div>
+            <div class="cta-group">
+                <a href="#projects" class="cta">View Projects</a>
+                <a href="#contact" class="cta cta-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="about">
+            <div class="section-header">
+                <h2 class="section-title">About</h2>
+                <p class="section-subtitle">Developer & Designer</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">PROJECTS COMPLETED</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">CLIENT SATISFACTION</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">TECHNOLOGIES</div>
+                </div>
+            </div>
+
+            <div class="about-content">
+                <p>As an Electronics and Communication Engineering student, I focus on building strong fundamentals in electronics, communication systems, and computing. My academic journey has equipped me with a deep understanding of signal processing, embedded systems, digital communications, and microcontroller programming.</p>
+
+                <p>I specialize in full-stack web development, creating seamless user experiences with React, Next.js, and Node.js. My expertise spans from crafting intuitive frontend interfaces with modern CSS frameworks to building robust backend systems with Express and MongoDB. I've successfully deployed multiple production-grade websites and applications, focusing on performance optimization, responsive design, and clean code architecture.</p>
+
+                <p>Beyond traditional development, I'm actively exploring Artificial Intelligence and Machine Learning, working with Python and OpenAI APIs to integrate intelligent features into applications. I'm particularly interested in how LLMs can enhance user experiences and automate complex workflows.</p>
+
+                <p>My unique combination of hardware knowledge and software expertise allows me to approach problems from multiple angles. Whether it's optimizing system performance, designing scalable architectures, or creating innovative solutions that bridge physical and digital worlds, I bring a comprehensive engineering perspective to every project.</p>
+            </div>
+
+            <div class="section-header" style="margin-top: 4rem;">
+                <h2 class="section-title">Experience</h2>
+                <p class="section-subtitle">2023 - Present</p>
+            </div>
+
+            <div class="code-block" style="margin-top: 2rem;">
+                <div class="code-line">
+                    <span class="line-number">01</span>
+                    <div class="code-content">
+                        <span class="keyword">position:</span> <span class="string">"Freelance Web Developer"</span>
+                    </div>
+                </div>
+                <div class="code-line">
+                    <span class="line-number">02</span>
+                    <div class="code-content" style="margin-left: 0;">
+                        <span class="keyword">description:</span> <span class="string">"Successfully delivered 10+ production-ready websites for clients across diverse industries including e-commerce, education, healthcare, and business services. Specialized in creating responsive, SEO-optimized websites with modern design principles and optimal performance metrics. Managed complete project lifecycles from client consultation and design mockups to deployment and ongoing maintenance."</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills-grid" style="margin-top: 3rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="stat-card">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">LIVE WEBSITES DEPLOYED</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">CLIENT SATISFACTION</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">TECHNOLOGIES MASTERED</div>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 4rem;">
+                <h2 class="section-title">Achievements</h2>
+                <p class="section-subtitle">Notable Accomplishments</p>
+            </div>
+
+            <div class="about-content">
+                <p><strong>ProCall Presentation:</strong> Presented an on-demand home service platform at World Creativity & Innovation Day 2025, showcasing system design and real-world application of technology to solve everyday problems.</p>
+
+                <p><strong>EduRevampers Platform:</strong> Conceptualized and developed an AI-based career guidance platform for students, providing structured career paths and intelligent recommendations for informed decision-making.</p>
+
+                <p><strong>Competitive Programming:</strong> Qualified for the second round of Kascade - Source Code (Kshitij, IIT Kharagpur, 2026) with an excellent score, demonstrating strong problem-solving abilities and algorithmic thinking.</p>
+
+                <p><strong>Author & Content Creator:</strong> Authored "The Compass of Commerce," an eBook exploring ethical entrepreneurship, leadership values, and value-driven business practices. Skilled in graphic design, poster creation, photo editing, and video editing with a strong sense of visual branding.</p>
+
+                <p><strong>Live Institutional Website:</strong> Designed, developed, and deployed a complete institutional website for Aaysha International Institute, handling design, content structuring, CMS customization, domain setup, hosting, and deployment for a real client.</p>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="section-header">
+                <h2 class="section-title">Skills</h2>
+                <p class="section-subtitle">Technologies & Expertise</p>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">React</div>
+                        <div class="skill-item">Next.js</div>
+                        <div class="skill-item">Tailwind CSS</div>
+                        <div class="skill-item">HTML5</div>
+                        <div class="skill-item">CSS3</div>
+                        <div class="skill-item">JavaScript ES6+</div>
+                        <div class="skill-item">Responsive Design</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Node.js</div>
+                        <div class="skill-item">Express.js</div>
+                        <div class="skill-item">MongoDB</div>
+                        <div class="skill-item">REST API</div>
+                        <div class="skill-item">Authentication</div>
+                        <div class="skill-item">Database Design</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>AI & Tools</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Python</div>
+                        <div class="skill-item">OpenAI APIs</div>
+                        <div class="skill-item">Git</div>
+                        <div class="skill-item">GitHub</div>
+                        <div class="skill-item">Docker</div>
+                        <div class="skill-item">AWS</div>
+                        <div class="skill-item">Postman</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Core ECE</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Signal Processing</div>
+                        <div class="skill-item">Embedded Systems</div>
+                        <div class="skill-item">Microcontrollers</div>
+                        <div class="skill-item">Digital Electronics</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="section-header">
+                <h2 class="section-title">Projects</h2>
+                <p class="section-subtitle">Selected Work</p>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">all</button>
+                <button class="filter-btn" data-filter="ecommerce">e-commerce</button>
+                <button class="filter-btn" data-filter="business">business</button>
+                <button class="filter-btn" data-filter="tools">tools</button>
+                <button class="filter-btn" data-filter="events">events</button>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid"></div>
+        </section>
+    </div>
+
+    <section id="contact" class="contact-section">
+        <div class="code-comment">// Let's Connect</div>
+        <h2 class="section-title" style="justify-content: center;">Get In Touch</h2>
+        <p class="section-subtitle" style="margin-left: 0;">Open to opportunities and collaborations</p>
+        
+        <div class="contact-links">
+            <a href="mailto:sumyyasadre05@gmail.com" class="contact-link">EMAIL</a>
+            <a href="https://www.linkedin.com/in/sumyya-sadre-alam/" target="_blank" class="contact-link">LINKEDIN</a>
+            <a href="https://github.com/Sumyya518" target="_blank" class="contact-link">GITHUB</a>
+            <a href="https://sumyya-resume-docx-1.tiiny.site/" target="_blank" class="contact-link">DOWNLOAD RESUME</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Sumyya Sadre Alam | Crafted with clean code</p>
+    </footer>
+
+    <script>
+        const projects = [
+            {
+                number: "01",
+                title: "Hygiena – E-commerce Platform",
+                description: "Modern e-commerce website featuring clean UI, product listings, smooth navigation, and fully responsive layouts optimized for all devices.",
+                category: "ecommerce",
+                liveUrl: "https://ecommerce-web-platform.vercel.app/",
+                codeUrl: null
+            },
+            {
+                number: "02",
+                title: "Vehicle Rental Booking Platform",
+                description: "Complete vehicle rental system with intuitive booking flow, search functionality, and mobile-first responsive design.",
+                category: "business",
+                liveUrl: "https://vehicle-rental-booking-platform.vercel.app/",
+                codeUrl: null
+            },
+            {
+                number: "03",
+                title: "Aaysha International Institute",
+                description: "Professional educational institute website featuring structured course details, admissions information, certifications, and student resources with accessible navigation.",
+                category: "business",
+                liveUrl: "https://aayshainternational.in/",
+                codeUrl: null
+            },
+            {
+                number: "04",
+                title: "Dental Clinic Website",
+                description: "Professional healthcare website designed to enhance patient experience, featuring service listings, modern layout, and responsive design.",
+                category: "business",
+                liveUrl: "https://dental-clinic-website-murex-rho.vercel.app/",
+                codeUrl: null
+            },
+            {
+                number: "05",
+                title: "Real Estate Platform",
+                description: "Property listing website with modern UI, clean layouts, responsive design, and clear presentation of real estate listings.",
+                category: "business",
+                liveUrl: "https://realestate-project-delta.vercel.app/",
+                codeUrl: null
+            },
+            {
+                number: "06",
+                title: "E-commerce Kite Platform",
+                description: "Professional e-commerce website with polished UI, product catalog, and smooth user experience suitable for business deployment.",
+                category: "ecommerce",
+                liveUrl: "https://ecommerce-kite-puce.vercel.app/",
+                codeUrl: null
+            },
+            {
+                number: "07",
+                title: "Invitation Card Website",
+                description: "Elegant digital invitation card website featuring interactive design, aesthetic layout, and responsive presentation.",
+                category: "events",
+                liveUrl: "https://wedincard.netlify.app/",
+                codeUrl: null
+            },
+            {
+                number: "08",
+                title: "Wedding Card Website",
+                description: "Modern wedding invitation website with visually pleasing design, smooth transitions, and mobile-friendly experience.",
+                category: "events",
+                liveUrl: "https://aawedcard.netlify.app/",
+                codeUrl: null
+            },
+            {
+                number: "09",
+                title: "To-Do List App",
+                description: "Productivity-focused task management application allowing users to add, edit, and delete tasks with a clean interface.",
+                category: "tools",
+                liveUrl: null,
+                codeUrl: "#"
+            },
+            {
+                number: "10",
+                title: "Financial Calculator",
+                description: "Comprehensive financial calculator for loan, EMI, investment, and budget calculations with accurate results and user-friendly design.",
+                category: "tools",
+                liveUrl: null,
+                codeUrl: "#"
+            }
+        ];
+
+        function renderProjects(filter = 'all') {
+            const grid = document.getElementById('projectsGrid');
+            const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+            
+            grid.innerHTML = filtered.map(project => `
+                <div class="project-card" data-category="${project.category}">
+                    <div class="project-content">
+                        <div class="project-number">// ${project.number}</div>
+                        <h3 class="project-title">${project.title}</h3>
+                        <p class="project-description">${project.description}</p>
+                        ${project.liveUrl ? `<a href="${project.liveUrl}" target="_blank" class="project-link">View Live →</a>` : ''}
+                        ${project.codeUrl ? `<a href="${project.codeUrl}" class="project-link">View Code</a>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderProjects(btn.dataset.filter);
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        renderProjects();
+    </script>
+</body>
+</html>
